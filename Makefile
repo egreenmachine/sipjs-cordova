@@ -11,3 +11,6 @@ sip:
 	cd sip.js && npm install && grunt build && cp dist/sip.js ../www/js/sip.js
 
 all: sip test
+
+debug: all
+	echo logcat | adb shell

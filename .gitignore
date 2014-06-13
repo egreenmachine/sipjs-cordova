@@ -3,3 +3,4 @@ platforms/android/CordovaLib/gen/
 platforms/android/assets/
 platforms/android/bin/
 platforms/android/gen/
+www/js/sip.js

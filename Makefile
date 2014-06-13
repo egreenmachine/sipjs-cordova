@@ -1,4 +1,4 @@
-all: build
+test: build
 	cordova run
 
 build: clean
@@ -8,4 +8,6 @@ clean:
 	find . | grep apk | xargs rm
 
 sip:
-	cd sip.js && npm install && grunt && cp dist/sip.js ../www/js/sip.js
+	cd sip.js && npm install && grunt build && cp dist/sip.js ../www/js/sip.js
+
+all: sip test

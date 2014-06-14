@@ -2,6 +2,7 @@ test: build
 	cordova run
 
 build: clean
+	mkdir -p platforms/android/assets/www/css
 	cordova build
 
 clean:

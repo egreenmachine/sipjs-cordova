@@ -42,10 +42,14 @@
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript" src="js/sip.js"></script>
+        <script type="text/javascript" src="js/PhoneRTCMediaHandler.js"></script>
         <script type="text/javascript">
             app.initialize();
 
             var $ = document.querySelector.bind(document);
+
+            // SIP.js refuses to work otherwise
+            SIP.WebRTC.isSupported = true;
 
             $('#phone').addEventListener('submit', function (e) {
               if (window.session) {
@@ -53,7 +57,12 @@
                 return;
               }
 
-              window.ua = window.ua || new SIP.UA({traceSip: true});
+              window.ua = window.ua || new SIP.UA({
+                traceSip: true,
+                mediaHandlerFactory: function defaultFactory (session, options) {
+                  return new PhoneRTCMediaHandler(session, options);
+                }
+              });
               window.session = window.ua.invite($('#target').value);
 
               // adapted from http://stackoverflow.com/a/5150556

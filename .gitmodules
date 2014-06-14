@@ -1,3 +1,3 @@
 [submodule "sip.js"]
 	path = sip.js
-	url = https://github.com/joseph-onsip/SIP.js.git
+	url = https://github.com/onsip/SIP.js.git

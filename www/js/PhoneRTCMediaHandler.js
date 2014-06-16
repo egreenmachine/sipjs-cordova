@@ -5,9 +5,7 @@ var PhoneRTCMediaHandler = function(session, options) {
 
   this.logger = session.ua.getLogger('sip.invitecontext.mediahandler', session.id);
   this.session = session;
-  this.localMedia = null;
   this.ready = true;
-  this.mediaStreamManager = SIP.WebRTC.MediaStreamManager.cast(options.mediaStreamManager);
   this.audioMuted = false;
   this.videoMuted = false;
 
@@ -54,16 +52,8 @@ PhoneRTCMediaHandler.prototype = Object.create(SIP.MediaHandler.prototype, {
   }},
 
   close: {writable: true, value: function close () {
-    this.logger.log('closing PeerConnection');
-    // have to check signalingState since this.close() gets called multiple times
-    // TODO figure out why that happens
-    if(this.peerConnection && this.peerConnection.signalingState !== 'closed') {
-      this.peerConnection.close();
-
-      if(this.localMedia) {
-        this.mediaStreamManager.release(this.localMedia);
-      }
-    }
+    this.logger.log('calling phonertc.disconnect()');
+    cordova.plugins.phonertc.disconnect();
   }},
 
   /**

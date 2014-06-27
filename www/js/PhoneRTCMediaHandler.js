@@ -72,10 +72,6 @@ PhoneRTCMediaHandler.prototype = Object.create(SIP.MediaHandler.prototype, {
     var pcDelay = 2000;
     setTimeout(function () {
       var sdp = this.phonertc.localSdp;
-      if (this.phonertc.role !== 'caller') {
-        sdp = sdp.replace('a=setup:actpass', 'a=setup:passive');
-      }
-      sdp = sdp.replace(/a=crypto.*\r\n/g, '');
       onSuccess(sdp);
     }.bind(this), pcDelay);
   }},

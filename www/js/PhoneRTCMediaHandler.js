@@ -66,7 +66,7 @@ PhoneRTCMediaHandler.prototype = Object.create(SIP.MediaHandler.prototype, {
                     onFailure = onFailure;
                     mediaHint = mediaHint;
     if (!this.phonertc.role) {
-      this.phonertcCall('caller');
+      this.phonertcCall('caller', mediaHint);
     }
 
     var pcDelay = 2000;
@@ -99,7 +99,7 @@ PhoneRTCMediaHandler.prototype = Object.create(SIP.MediaHandler.prototype, {
     }
   }},
 
-  phonertcCall: {writable: true, value: function phonertcCall (role) {
+  phonertcCall: {writable: true, value: function phonertcCall (role, mediaHint) {
     this.logger.log("XXX phonertcCall: " + role);
     this.phonertc.role = role;
     cordova.plugins.phonertc.call({
@@ -115,6 +115,11 @@ PhoneRTCMediaHandler.prototype = Object.create(SIP.MediaHandler.prototype, {
       },
       disconnectCallback: function () {
         window.alert('Call disconnected!');
+        window.session = null;
+      },
+      video: {
+        localVideo: mediaHint.render.local.video,
+        remoteVideo: mediaHint.render.remote.video
       }
     });
   }},
